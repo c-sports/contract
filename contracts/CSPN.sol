@@ -9,7 +9,7 @@ contract CSPN is ERC20, Ownable {
 
     uint private _totalSupply = 13370000;
     uint private _initialSupply = 1000;
-    mapping (address => bool) public _usermint;
+    // mapping (address => bool) public _usermint;
 
     constructor() ERC20 ('Crypto Sports Network', 'CSPN') {
         _mint(owner(), _initialSupply * 10 ** 18);
@@ -17,11 +17,11 @@ contract CSPN is ERC20, Ownable {
 
     function mint(address to, uint256 amount) external onlyOwner payable {
         require(to != address(0), "CSPN Token: cannot mint to zero address");
-        require(!_usermint[to], 'Already minted');
-        require(_totalSupply < _initialSupply + amount, 'Override totalSupply');
-        _usermint[to] = true;
+        // require(!_usermint[to], 'Already minted');
+        require(_totalSupply > _initialSupply + amount, 'Override totalSupply');
+        // _usermint[to] = true;
         _mint(to, amount * 10 ** 18);
-        (bool sent, bytes memory data) = to.call{value: msg.value}("");
-        require(sent, "Failed to send CSPN");
+        // (bool sent, bytes memory data) = to.call{value: msg.value}("");
+        // require(sent, "Failed to send CSPN");
     }
 }
