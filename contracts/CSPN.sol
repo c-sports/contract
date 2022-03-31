@@ -20,6 +20,7 @@ contract CSPN is ERC20, Ownable {
         // require(!_usermint[to], 'Already minted');
         require(_totalSupply > _initialSupply + amount, 'Override totalSupply');
         // _usermint[to] = true;
+        _initialSupply = _initialSupply + amount;
         _mint(to, amount * 10 ** 18);
         // (bool sent, bytes memory data) = to.call{value: msg.value}("");
         // require(sent, "Failed to send CSPN");
