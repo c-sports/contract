@@ -6,14 +6,19 @@
 const hre = require("hardhat");
 
 async function main() {
-  const Token = await hre.ethers.getContractFactory("CSPN");
+  const Token = await hre.ethers.getContractFactory("CSPNToken");
   const token = await Token.deploy();
 
   await token.deployed();
 
-  console.log('Owner', await token.owner());
+  console.log("CSPN Token deployed to:", token.address);
 
-  console.log('CSPN token deployed to:', token.address);
+  const Staking = await hre.ethers.getContractFactory("Staking");
+  const staking = await Staking.deploy();
+
+  await staking.deployed();
+
+  console.log("CSPN Staking deployed to:", staking.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
