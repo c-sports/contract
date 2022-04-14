@@ -629,7 +629,7 @@ contract Staking is Ownable{
     
     mapping (address => staker)  _stakers;
     
-    IERC20 public CSPN = IERC20 (0x4005F513Ad49Cf24523529f6A6E813966601160e);
+    IERC20 public CSPN = IERC20 (0x4005F513Ad49Cf24523529f6A6E813966601160e); //update token address
 
     constructor(){
     }
@@ -641,7 +641,6 @@ contract Staking is Ownable{
         // We will reward the user 0.1% per Hour So thats 0.1% per 3600 seconds
         // the alghoritm is  seconds = block.timestamp - stake seconds (block.timestap - _stake.since)
         // hours = Seconds / 3600 (seconds /3600) 3600 is an variable in Solidity names hours
-        // we then multiply each token by the hours staked , then divide by the rewardPerDay rate 
         // we then multiply each token by the hours staked , then divide by the rewardPerDay rate
         uint256 rewardPerDay = 1000; //10%
 
@@ -709,6 +708,13 @@ contract Staking is Ownable{
         _stakers[msg.sender].reward = 0;
         _stakers[msg.sender].stakeTime = block.timestamp;
         CSPN.transfer(msg.sender, reward);
+    }
+
+    function reinvest() public {
+        uint256 reward = getReward(msg.sender);
+        _stakers[msg.sender].reward = 0;
+        _stakers[msg.sender].stakeTime = block.timestamp;
+        _stakers[msg.sender].amount = _stakers[msg.sender].amount + reward;
     }
 
 
