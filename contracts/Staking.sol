@@ -1,12 +1,3 @@
-/**
- *Submitted for verification at Etherscan.io on 2021-06-24
-*/
-
-/**
- *Submitted for verification at Etherscan.io on 2021-06-13
-*/
-
-// SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.4;
