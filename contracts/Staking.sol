@@ -662,7 +662,8 @@ contract Staking is Ownable{
         } else if (_stakers[addr].amount >= 100000) {
             rewardPerDay = 2000; //20%
         }
-        return (((block.timestamp - _stakers[addr].stakeTime) / 60 ) * _stakers[addr].amount) * rewardPerDay / 365 / 100;
+        // 24 hours => 1 minutes for test
+        return (((block.timestamp - _stakers[addr].stakeTime) / 24 hours ) * _stakers[addr].amount) * rewardPerDay / 365 / 100;
     }
 
 
