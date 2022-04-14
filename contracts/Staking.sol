@@ -644,21 +644,22 @@ contract Staking is Ownable{
         // we then multiply each token by the hours staked , then divide by the rewardPerDay rate
         uint256 rewardPerDay = 1000; //10%
 
-        if (_stakers[addr].amount >= 1337 && _stakers[addr].amount < 10000) {
+        // need update decimals
+        if (_stakers[addr].amount >= 1337 * 10 ** 18 && _stakers[addr].amount < 10000 * 10 ** 18) {
             rewardPerDay = 1337; //13.37%
         } else if (
-            _stakers[addr].amount >= 10000 && _stakers[addr].amount < 25000
+            _stakers[addr].amount >= 10000 * 10 ** 18 && _stakers[addr].amount < 25000 * 10 ** 18
         ) {
             rewardPerDay = 1500; //15%
         } else if (
-            _stakers[addr].amount >= 25000 && _stakers[addr].amount < 50000
+            _stakers[addr].amount >= 25000 * 10 ** 18 && _stakers[addr].amount < 50000 * 10 ** 18
         ) {
             rewardPerDay = 1650; //16.5%
         } else if (
-            _stakers[addr].amount >= 50000 && _stakers[addr].amount < 100000
+            _stakers[addr].amount >= 50000 * 10 ** 18 && _stakers[addr].amount < 100000 * 10 ** 18
         ) {
             rewardPerDay = 1800; //18%
-        } else if (_stakers[addr].amount >= 100000) {
+        } else if (_stakers[addr].amount >= 100000  * 10 ** 18) {
             rewardPerDay = 2000; //20%
         }
         // 24 hours => 1 minutes for test
