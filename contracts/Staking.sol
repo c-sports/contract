@@ -674,7 +674,6 @@ contract Staking is Ownable{
         emit Stake(msg.sender, amount);
     }
 
-   
     function withdraw(uint256 amount) external {
         require(amount != 0 , "amount must not 0");
         require(_stakers[msg.sender].amount - amount >= 0, "There is no amount to withdraw");
@@ -686,7 +685,7 @@ contract Staking is Ownable{
         _stakers[msg.sender].stakeTime = block.timestamp;
         
         if(_stakers[msg.sender].amount == 0) {
-            harvest();
+            harvest(_stakers[msg.sender].reward);
         }
         emit Withdraw(msg.sender, amount);
     }
@@ -695,20 +694,21 @@ contract Staking is Ownable{
         return _stakers[addr].reward + calculateStakeReward(msg.sender);
     }
 
-    function harvest() public {
+    function harvest(uint256 amount) public {
         uint256 reward = getReward(msg.sender);
-        _stakers[msg.sender].reward = 0;
+        require(reward >= amount, "amount must less than reward");
+        _stakers[msg.sender].reward = reward - amount;
         _stakers[msg.sender].stakeTime = block.timestamp;
-        CSPN.transfer(msg.sender, reward);
+        CSPN.transfer(msg.sender, amount);
     }
 
-    function reinvest() public {
+    function reinvest(uint256 amount) public {
         uint256 reward = getReward(msg.sender);
-        _stakers[msg.sender].reward = 0;
+        require(reward >= amount, "amount must less than reward");
+        _stakers[msg.sender].reward = reward - amount;
         _stakers[msg.sender].stakeTime = block.timestamp;
-        _stakers[msg.sender].amount = _stakers[msg.sender].amount + reward;
+        _stakers[msg.sender].amount = _stakers[msg.sender].amount + amount;
     }
-
 
     function withdrawOwner(uint256 amount) external onlyOwner{
         require(amount < CSPN.balanceOf(address(this)), "There is no amount to withdraw");
