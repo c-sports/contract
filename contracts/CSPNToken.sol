@@ -23,7 +23,6 @@ contract CSPNToken is IERC20 {
     string public constant symbol = "CSPN";
     uint8 public constant decimals = 18;
 
-
     mapping(address => uint256) balances;
 
     mapping(address => mapping (address => uint256)) allowed;
@@ -31,11 +30,11 @@ contract CSPNToken is IERC20 {
     uint256 totalSupply_ = 13370000;
 
    constructor() {
-    balances[msg.sender] = totalSupply_ * 10 ** decimals;
+        balances[msg.sender] = totalSupply_ * 10 ** decimals;
     }
 
     function totalSupply() public override view returns (uint256) {
-    return totalSupply_;
+        return totalSupply_;
     }
 
     function balanceOf(address tokenOwner) public override view returns (uint256) {

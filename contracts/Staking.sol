@@ -620,9 +620,10 @@ contract Staking is Ownable{
     
     mapping (address => staker)  _stakers;
     
-    IERC20 public CSPN = IERC20 (0x4005F513Ad49Cf24523529f6A6E813966601160e); //update token address
+    IERC20 public CSPN;
 
-    constructor(){
+    constructor(IERC20 _cspn){
+        CSPN = _cspn;
     }
     
     function calculateStakeReward(address addr) internal view returns (uint256) {
@@ -654,7 +655,7 @@ contract Staking is Ownable{
             rewardPerDay = 2000; //20%
         }
         // 24 hours => 1 minutes for test
-        return (((block.timestamp - _stakers[addr].stakeTime) / 24 hours ) * _stakers[addr].amount) * rewardPerDay / 365 / 100;
+        return (((block.timestamp - _stakers[addr].stakeTime) / 60 ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
     }
 
 
@@ -691,7 +692,7 @@ contract Staking is Ownable{
     }
 
     function getReward(address addr) public view returns (uint256) {
-        return _stakers[addr].reward + calculateStakeReward(msg.sender);
+        return _stakers[addr].reward + calculateStakeReward(addr);
     }
 
     function harvest(uint256 amount) public {

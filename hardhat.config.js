@@ -26,6 +26,7 @@ module.exports = {
   etherscan: {
     apiKey: {
       // polygon
+      bscTestnet: process.env.BSCSCAN_API_KEY,
       polygon: process.env.MATIC_API_KEY,
       polygonMumbai: process.env.MATIC_API_KEY,
     }
@@ -37,7 +38,11 @@ module.exports = {
     },
     mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",
-      accounts: [process.env.PRIVATE_KEY]
+      accounts: [process.env.PRIVATE_KEY],
+    },
+    bsctestnet: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      accounts: [process.env.PRIVATE_KEY],
     },
     ganache: {
       url: 'http://localhost:7545',

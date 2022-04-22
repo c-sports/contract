@@ -6,6 +6,13 @@
 const hre = require("hardhat");
 
 async function main() {
+  // const Token = await hre.ethers.getContractFactory("WalterToken");
+  // const token = await Token.deploy();
+
+  // await token.deployed();
+
+  // console.log("CSPN Token deployed to:", token.address);
+  
   const Token = await hre.ethers.getContractFactory("CSPNToken");
   const token = await Token.deploy();
 
@@ -14,7 +21,7 @@ async function main() {
   console.log("CSPN Token deployed to:", token.address);
 
   const Staking = await hre.ethers.getContractFactory("Staking");
-  const staking = await Staking.deploy();
+  const staking = await Staking.deploy(token.address);
 
   await staking.deployed();
 
