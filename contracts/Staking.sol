@@ -616,6 +616,7 @@ contract Staking is Ownable{
         uint256 amount;
         uint256 reward;
         uint256 stakeTime;
+        uint256 total_reward;
     }
     
     mapping (address => staker)  _stakers;
@@ -699,6 +700,7 @@ contract Staking is Ownable{
         uint256 reward = getReward(msg.sender);
         require(reward >= amount, "amount must less than reward");
         _stakers[msg.sender].reward = reward - amount;
+        _stakers[msg.sender].total_reward = _stakers[msg.sender].total_reward + amount;
         _stakers[msg.sender].stakeTime = block.timestamp;
         CSPN.transfer(msg.sender, amount);
     }
