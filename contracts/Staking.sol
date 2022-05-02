@@ -696,6 +696,10 @@ contract Staking is Ownable{
         return _stakers[addr].reward + calculateStakeReward(addr);
     }
 
+    function getTotalReward(address addr) public view returns (uint256) {
+        return _stakers[addr].total_reward;
+    }
+
     function harvest(uint256 amount) public {
         uint256 reward = getReward(msg.sender);
         require(reward >= amount, "amount must less than reward");
