@@ -20,12 +20,12 @@ async function main() {
 
   console.log("CSPN Token deployed to:", token.address);
 
-  const Staking = await hre.ethers.getContractFactory("Staking");
-  const staking = await Staking.deploy(token.address);
+  // const Staking = await hre.ethers.getContractFactory("Staking");
+  // const staking = await Staking.deploy(token.address);
 
-  await staking.deployed();
+  // await staking.deployed();
 
-  console.log("CSPN Staking deployed to:", staking.address);
+  // console.log("CSPN Staking deployed to:", staking.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
