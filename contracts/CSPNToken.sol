@@ -180,11 +180,11 @@ contract CSPNToken is IERC20, Ownable {
 
     mapping(address => mapping (address => uint256)) allowed;
 
-    uint256 _totalSupply = 13370000;
+    uint256 _totalSupply = 13370000 * 10 ** decimals;
     uint256 _rem_supply = 0;
 
    constructor() {
-        balances[msg.sender] = _totalSupply * 10 ** decimals;
+        balances[msg.sender] = _totalSupply;
     }
 
     function totalSupply() public override view returns (uint256) {
