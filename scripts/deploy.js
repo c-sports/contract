@@ -13,15 +13,15 @@ async function main() {
 
   // console.log("CSPN Token deployed to:", token.address);
   
-  const Token = await hre.ethers.getContractFactory("CSPNToken");
-  const token = await Token.deploy();
+  // const Token = await hre.ethers.getContractFactory("CSPNToken");
+  // const token = await Token.deploy();
 
-  await token.deployed();
+  // await token.deployed();
 
-  console.log("CSPN Token deployed to:", token.address);
+  // console.log("CSPN Token deployed to:", token.address);
 
   const Staking = await hre.ethers.getContractFactory("Staking");
-  const staking = await Staking.deploy(token.address);
+  const staking = await Staking.deploy("0x7b276f12f3d3eE275bF43A4CbdF9537117D0718e");
 
   await staking.deployed();
 
