@@ -15,4 +15,11 @@ npx hardhat help
 ```
 
 
-# CSPN token address: 0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87
+# CSPN token address: 
+0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87
+
+# How to deploy
+npx hardhat deploy ./script/deploy --network matic
+
+# How to verify
+npx hardhat verify Staking_address 0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87 --network matic
