@@ -21,7 +21,7 @@ async function main() {
   // console.log("CSPN Token deployed to:", token.address);
 
   const Staking = await hre.ethers.getContractFactory("Staking");
-  const staking = await Staking.deploy("0x7b276f12f3d3eE275bF43A4CbdF9537117D0718e");
+  const staking = await Staking.deploy("0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87"); //CSPN Token address
 
   await staking.deployed();
 

@@ -13,3 +13,6 @@ npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
 ```
+
+
+# CSPN token address: 0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87

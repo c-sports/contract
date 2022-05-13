@@ -656,7 +656,7 @@ contract Staking is Ownable{
             rewardPerDay = 2000; //20%
         }
         // 24 hours => 1 minutes for test
-        return (((block.timestamp - _stakers[addr].stakeTime) / 1 minutes ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
+        return (((block.timestamp - _stakers[addr].stakeTime) / 24 hours ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
     }
 
 
