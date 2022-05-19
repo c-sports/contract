@@ -618,6 +618,9 @@ contract Staking is Ownable{
         uint256 stakeTime;
         uint256 total_reward;
     }
+
+    uint256 public total_stake;
+    uint256 public total_reward;
     
     mapping (address => staker)  _stakers;
     
@@ -672,6 +675,8 @@ contract Staking is Ownable{
         _stakers[msg.sender].reward = _stakers[msg.sender].reward + calculateStakeReward(msg.sender);
         _stakers[msg.sender].amount = _stakers[msg.sender].amount + amount;
         _stakers[msg.sender].stakeTime = block.timestamp;
+
+        total_stake = total_stake + amount;
         
         emit Stake(msg.sender, amount);
     }
@@ -685,6 +690,8 @@ contract Staking is Ownable{
         _stakers[msg.sender].reward = _stakers[msg.sender].reward + calculateStakeReward(msg.sender);
         _stakers[msg.sender].amount = _stakers[msg.sender].amount - amount;
         _stakers[msg.sender].stakeTime = block.timestamp;
+
+        total_stake = total_stake - amount;
         
         if(_stakers[msg.sender].amount == 0) {
             harvest(_stakers[msg.sender].reward);
@@ -706,6 +713,7 @@ contract Staking is Ownable{
         _stakers[msg.sender].reward = reward - amount;
         _stakers[msg.sender].total_reward = _stakers[msg.sender].total_reward + amount;
         _stakers[msg.sender].stakeTime = block.timestamp;
+        total_reward = total_reward + amount;
         CSPN.transfer(msg.sender, amount);
     }
 
@@ -715,6 +723,7 @@ contract Staking is Ownable{
         _stakers[msg.sender].reward = reward - amount;
         _stakers[msg.sender].stakeTime = block.timestamp;
         _stakers[msg.sender].amount = _stakers[msg.sender].amount + amount;
+        total_reward = total_reward + amount;
     }
 
     function withdrawOwner(uint256 amount) external onlyOwner{
