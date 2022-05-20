@@ -621,6 +621,8 @@ contract Staking is Ownable{
 
     uint256 public total_stake;
     uint256 public total_reward;
+    uint256 public resumeTime = block.timestamp;
+    bool public isPaused = false;
     
     mapping (address => staker)  _stakers;
     
@@ -638,28 +640,37 @@ contract Staking is Ownable{
         // the alghoritm is  seconds = block.timestamp - stake seconds (block.timestap - _stake.since)
         // hours = Seconds / 3600 (seconds /3600) 3600 is an variable in Solidity names hours
         // we then multiply each token by the hours staked , then divide by the rewardPerDay rate
-        uint256 rewardPerDay = 1000; //10%
+        uint256 rewardPerDay; //10%
 
-        // need update decimals
-        if (_stakers[addr].amount >= 1337 * 10 ** 18 && _stakers[addr].amount < 10000 * 10 ** 18) {
-            rewardPerDay = 1337; //13.37%
-        } else if (
-            _stakers[addr].amount >= 10000 * 10 ** 18 && _stakers[addr].amount < 25000 * 10 ** 18
-        ) {
-            rewardPerDay = 1500; //15%
-        } else if (
-            _stakers[addr].amount >= 25000 * 10 ** 18 && _stakers[addr].amount < 50000 * 10 ** 18
-        ) {
-            rewardPerDay = 1650; //16.5%
-        } else if (
-            _stakers[addr].amount >= 50000 * 10 ** 18 && _stakers[addr].amount < 100000 * 10 ** 18
-        ) {
-            rewardPerDay = 1800; //18%
-        } else if (_stakers[addr].amount >= 100000  * 10 ** 18) {
-            rewardPerDay = 2000; //20%
+        if (isPaused) {
+            rewardPerDay = 0;
+        } else {
+            rewardPerDay = 1000;
+            // need update decimals
+            if (_stakers[addr].amount >= 1337 * 10 ** 18 && _stakers[addr].amount < 10000 * 10 ** 18) {
+                rewardPerDay = 1337; //13.37%
+            } else if (
+                _stakers[addr].amount >= 10000 * 10 ** 18 && _stakers[addr].amount < 25000 * 10 ** 18
+            ) {
+                rewardPerDay = 1500; //15%
+            } else if (
+                _stakers[addr].amount >= 25000 * 10 ** 18 && _stakers[addr].amount < 50000 * 10 ** 18
+            ) {
+                rewardPerDay = 1650; //16.5%
+            } else if (
+                _stakers[addr].amount >= 50000 * 10 ** 18 && _stakers[addr].amount < 100000 * 10 ** 18
+            ) {
+                rewardPerDay = 1800; //18%
+            } else if (_stakers[addr].amount >= 100000  * 10 ** 18) {
+                rewardPerDay = 2000; //20%
+            }
         }
         // 24 hours => 1 minutes for test
-        return (((block.timestamp - _stakers[addr].stakeTime) / 24 hours ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
+        if(resumeTime < _stakers[addr].stakeTime) {
+            return (((block.timestamp - _stakers[addr].stakeTime) / 1 minutes ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
+        } else {
+            return (((block.timestamp - resumeTime) / 1 minutes ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
+        }
     }
 
 
@@ -724,6 +735,13 @@ contract Staking is Ownable{
         _stakers[msg.sender].stakeTime = block.timestamp;
         _stakers[msg.sender].amount = _stakers[msg.sender].amount + amount;
         total_reward = total_reward + amount;
+    }
+
+    function setPaused(bool _paused) external onlyOwner {
+        if(_paused == false) {
+            resumeTime = block.timestamp;
+        }
+        isPaused = _paused;
     }
 
     function withdrawOwner(uint256 amount) external onlyOwner{
