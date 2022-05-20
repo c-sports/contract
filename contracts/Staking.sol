@@ -667,9 +667,9 @@ contract Staking is Ownable{
         }
         // 24 hours => 1 minutes for test
         if(resumeTime < _stakers[addr].stakeTime) {
-            return (((block.timestamp - _stakers[addr].stakeTime) / 1 minutes ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
+            return (((block.timestamp - _stakers[addr].stakeTime) / 24 hours ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
         } else {
-            return (((block.timestamp - resumeTime) / 1 minutes ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
+            return (((block.timestamp - resumeTime) / 24 hours ) * _stakers[addr].amount) * rewardPerDay / 365 / 10000;
         }
     }
 
