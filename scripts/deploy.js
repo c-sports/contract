@@ -4,28 +4,46 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
+const { BigNumber }  = require("ethers");
 
 async function main() {
-  // const Token = await hre.ethers.getContractFactory("WalterToken");
-  // const token = await Token.deploy();
+  const Token = await hre.ethers.getContractFactory("CSPNToken");
+  const token = await Token.deploy();
 
-  // await token.deployed();
+  await token.deployed();
 
-  // console.log("CSPN Token deployed to:", token.address);
-  
-  // const Token = await hre.ethers.getContractFactory("CSPNToken");
-  // const token = await Token.deploy();
+  console.log("CSPN Token deployed to:", token.address);
 
-  // await token.deployed();
+  // const Staking = await hre.ethers.getContractFactory("Staking");
+  // const staking = await Staking.deploy("0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87"); //CSPN Token address: 0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87
 
-  // console.log("CSPN Token deployed to:", token.address);
+  // await staking.deployed();
 
-  const Staking = await hre.ethers.getContractFactory("Staking");
-  const staking = await Staking.deploy("0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87"); //CSPN Token address: 0x9A0b381394fbE689B344d1ebd2d4DccFF31adf87
+  // console.log("CSPN Staking deployed to:", staking.address);
 
-  await staking.deployed();
+  const CSPNNFTFactory = await hre.ethers.getContractFactory("CSPNNFTFactory");
+  const cspnNFTFactory = await CSPNNFTFactory.deploy();
 
-  console.log("CSPN Staking deployed to:", staking.address);
+  await cspnNFTFactory.deployed();
+
+  console.log("CSPN NFTFactory deployed to:", cspnNFTFactory.address);
+
+  const signers = await ethers.getSigners();
+  const platformFee = BigNumber.from(10); // 10%
+  const feeRecipient = signers[0].address;
+
+  const CSPNMarketplace = await hre.ethers.getContractFactory(
+    "CSPNNFTMarketplace"
+  );
+  const cspnMarketplace = await CSPNMarketplace.deploy(
+    platformFee,
+    feeRecipient,
+    cspnNFTFactory.address
+  );
+
+  await cspnMarketplace.deployed();
+
+  console.log("CSPN NFTMarketplace deployed to:", cspnMarketplace.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

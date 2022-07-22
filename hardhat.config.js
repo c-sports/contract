@@ -21,7 +21,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  */
 
 module.exports = {
-  solidity: "0.8.0",
+  solidity: "0.8.4",
   defaultNetwork: "mumbai",
   etherscan: {
     apiKey: {
@@ -29,11 +29,11 @@ module.exports = {
       bscTestnet: process.env.BSCSCAN_API_KEY,
       polygon: process.env.MATIC_API_KEY,
       polygonMumbai: process.env.MATIC_API_KEY,
-    }
+    },
   },
   networks: {
     matic: {
-      url : "https://rpc-mainnet.maticvigil.com",
+      url: "https://rpc-mainnet.maticvigil.com",
       accounts: [process.env.PRIVATE_KEY],
     },
     mumbai: {
@@ -45,12 +45,12 @@ module.exports = {
       accounts: [process.env.PRIVATE_KEY],
     },
     ganache: {
-      url: 'http://localhost:7545',
-      accounts: [process.env.PRIVATE_KEY]
+      url: "http://localhost:7545",
+      accounts: [process.env.PRIVATE_KEY],
     },
     local: {
-      url: 'http://localhost:8545',
-      accounts: [process.env.PRIVATE_KEY]
-    }
+      url: "http://localhost:8545",
+      accounts: [process.env.PRIVATE_KEY],
+    },
   },
 };
